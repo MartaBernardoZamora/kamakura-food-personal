@@ -1,10 +1,13 @@
 //Intenta separar los eventos en este archivo.
-import {clearHtml, menu, productAdd} from "./components/menu.js";
+import{products, filters} from "./data/data.js";
+import {clearHtml, printMenu} from "./components/menu.js";
+import {productAddToCart} from "./components/cart.js";
+
 document.addEventListener("DOMContentLoaded", function() {
     clearHtml();
-    menu();
+    printMenu(products);
 });
-const buttonAdd= (button) =>{
-    button.addEventListener('click', productAdd);
+const setAddButtonEvent = (button) =>{
+    button.addEventListener('click', productAddToCart);
 }
-export {buttonAdd}
+export {setAddButtonEvent}

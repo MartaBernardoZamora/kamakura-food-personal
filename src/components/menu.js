@@ -1,11 +1,9 @@
-//DEBE imprimir en pantalla la información de filtros.
-import{products} from "../data/data.js";
-import{buttonAdd} from "../events.js"
+import{setAddButtonEvent} from "../events.js"
 const clearHtml = () => {
-    document.querySelector('.product-container').remove();
-    document.querySelector('.filter').remove();    
-    document.querySelector('.cart-container').remove();
-    document.querySelector('.receipt-product').remove();
+    document.querySelector('.product-container')?.remove();
+    document.querySelector('.filter')?.remove();    
+    document.querySelector('.cart-container')?.remove();
+    document.querySelector('.receipt-product')?.remove();
 }
 const createElement = (tag, className=null, text=null) =>{
     const element = document.createElement(tag);
@@ -13,38 +11,46 @@ const createElement = (tag, className=null, text=null) =>{
     text && (element.textContent = text);
     return element;
 }
-const menu = () => {
-    console.log(products);
+//DEBE imprimir en pantalla la información de filtros.
+
+//DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
+const formatMenu = (name, description, price) => {
     try {
-        const fragment=document.createDocumentFragment();
         const productContainer =createElement('div', 'product-container');
 
-        const h3Product=createElement('h3', null, 'titulo');//cambiar título
+        const h3Product=createElement('h3', null, name);//cambiar título
         productContainer.appendChild(h3Product);
 
-        const pProduct=createElement('p', null, 'Descripción');//cambiar descripción
+        const pProduct=createElement('p', null, description);//cambiar descripción
         productContainer.appendChild(pProduct);
 
         const priceProduct=createElement('div', 'price-container');
 
-        const h5Product=createElement('h5', null, 'Precio €');//cambiar precio
+        const h5Product=createElement('h5', null, `${price} €`);//cambiar precio
         priceProduct.appendChild(h5Product);
 
         const buttonProduct=createElement('button', 'add-button', 'Añadir');
-        buttonAdd(buttonProduct);
+        setAddButtonEvent(buttonProduct);
         priceProduct.appendChild(buttonProduct);
 
         productContainer.appendChild(priceProduct);
 
-        fragment.appendChild(productContainer);
+        return productContainer;
         
-        document.getElementById('products').appendChild(fragment);
+        
     } catch (error) {
         console.error(`Error charge products: ${error}`)
     }
 }
-const productAdd = () =>{
-    alert("aqui");
+const setDataMenu = (fragment, products) => products.map(product =>{
+    const productPrint = formatMenu(product.name, product.description, product.price);
+    fragment.appendChild(productPrint);
+});
+const printMenu = (products) => {
+    const fragment=document.createDocumentFragment();
+    setDataMenu(fragment, products);
+    document.getElementById('products').appendChild(fragment);
 }
-export{clearHtml, menu, productAdd}
-//DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
+
+
+export{clearHtml, printMenu}
