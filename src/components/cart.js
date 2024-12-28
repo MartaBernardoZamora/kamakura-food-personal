@@ -2,4 +2,5 @@
 const productAddToCart = () => {
     alert("aqui irá un evento");
 }
+
 export{productAddToCart}

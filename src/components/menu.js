@@ -1,4 +1,5 @@
-import{setAddButtonEvent} from "../events.js"
+import{setFilterButtonEvent, setAddButtonEvent} from "../events.js"
+
 const clearHtml = () => {
     document.querySelector('.product-container')?.remove();
     document.querySelector('.filter')?.remove();    
@@ -12,7 +13,24 @@ const createElement = (tag, className=null, text=null) =>{
     return element;
 }
 //DEBE imprimir en pantalla la información de filtros.
-
+const formatFilters=(filter)=>{
+    try {
+        const filterButton =createElement('button', 'filter', filter);
+        setFilterButtonEvent(filterButton);
+        return filterButton;
+    }catch(error){
+        console.error(`Error charge filters: ${error}`);
+    }
+}
+const setDataFilters = (fragment, filters) => filters.map(filter =>{
+    const filterPrint = formatFilters(filter);
+    fragment.appendChild(filterPrint);
+});
+const printFilters = (filters) =>{
+    const fragment=document.createDocumentFragment();
+    setDataFilters(fragment, filters);
+    document.getElementById('filters').appendChild(fragment);
+}
 //DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
 const formatMenu = (name, description, price) => {
     try {
@@ -53,4 +71,4 @@ const printMenu = (products) => {
 }
 
 
-export{clearHtml, printMenu}
+export{clearHtml, printFilters, printMenu}
