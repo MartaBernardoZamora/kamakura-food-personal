@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('cart').addEventListener('click', displayCart);
 });
 const setFilterButtonEvent = (button) =>{
-    button.addEventListener('click', changeFilter);
+    button.addEventListener('click', () => changeFilter(products));
 }
 const setAddButtonEvent = (button) =>{
     button.addEventListener('click', productAddToCart);
